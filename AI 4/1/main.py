@@ -18,16 +18,41 @@ def isSafe(row, col):
     for i in range(n):
         if board[row][i] == 1:
             return False
-        if board[i][col] == 1:
+    for j in range(n):
+        if board[j][col] == 1:
             return False
 
-    for i, j in zip(range(row, -1, -1), range(col, -1, -1)):
+    i = row - 1
+    j = col - 1
+    while i >= 0 and j >= 0:
         if board[i][j] == 1:
             return False
+        i -= 1
+        j -= 1
 
-    for i, j in zip(range(row, -1, -1), range(col, n)):
+    i = row - 1
+    j = col + 1
+    while i >= 0 and j < n:
         if board[i][j] == 1:
             return False
+        i -= 1
+        j += 1
+
+    i = row + 1
+    j = col - 1
+    while i < n and j >= 0:
+        if board[i][j] == 1:
+            return False
+        i += 1
+        j -= 1
+
+    i = row + 1
+    j = col + 1
+    while i < n and j < n:
+        if board[i][j] == 1:
+            return False
+        i += 1
+        j += 1
 
     return True
 
@@ -39,11 +64,12 @@ def Put(n, count):
         for j in range(n):
             if isSafe(i, j):
                 board[i][j] = 1
-                count += 1
-                if Put(n, count):
+                count = count + 1
+                if Put(n, count) == True:
                     return True
                 board[i][j] = 0
-                count -= 1
+                count = count - 1
+
     return False
 
 getBoard()
